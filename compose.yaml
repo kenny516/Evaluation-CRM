@@ -1,0 +1,6 @@
+﻿services:
+  evaluationcrm:
+    image: evaluationcrm
+    build:
+      context: .
+      dockerfile: EvaluationCrm/Dockerfile

@@ -1,0 +1,57 @@
+# Visual Studio et IDE
+.vscode/
+*.code-workspace
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build
+bin/
+obj/
+out/
+*.dll
+*.exe
+*.pdb
+*.log
+
+# Configuration et secrets
+appsettings.json
+appsettings.Development.json
+secrets.json
+.env
+*.pubxml
+*.pubxml.user
+
+# Packages et dépendances
+packages/
+node_modules/
+bower_components/
+wwwroot/lib/
+
+# Logs et fichiers temporaires
+*.log
+logs/
+*.bak
+*.swp
+*.DS_Store
+Thumbs.db
+
+# Fichiers spécifiques à Entity Framework
+Migrations/
+
+# Docker
+docker-compose.override.yml
+docker-compose.override.*.yml
+.env
+
+# Rider / Resharper
+*.DotSettings.user
+.idea/
+
+# Azure et Cloud
+AzureFunctionsTools/
+.publish/
+*.azure
+*.PublishSettings
