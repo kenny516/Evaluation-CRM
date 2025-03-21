@@ -1,4 +1,18 @@
+using EvaluationCrm.Data;
+using EvaluationCrm.repository;
+using EvaluationCrm.service;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), 
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
+
+// injection de dependance
+builder.Services.AddScoped<RoleService>();
+builder.Services.AddScoped<RoleRepository>();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
