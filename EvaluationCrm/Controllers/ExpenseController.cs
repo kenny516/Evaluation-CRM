@@ -33,7 +33,8 @@ public class ExpenseController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        List<Expense>? expenses = _expenseService.GetExpenses();
+        return View(expenses);
     }
 
     [HttpGet]
