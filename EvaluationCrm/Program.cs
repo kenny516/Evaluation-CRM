@@ -1,4 +1,5 @@
 using EvaluationCrm.Data;
+using EvaluationCrm.Models.entity;
 using EvaluationCrm.repository;
 using EvaluationCrm.service;
 using Microsoft.EntityFrameworkCore;
@@ -15,8 +16,9 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<RoleService>();
 builder.Services.AddScoped<RoleRepository>();
 builder.Services.AddTransient<ParameterService>();
-
-
+builder.Services.AddScoped<TicketService>();
+builder.Services.AddScoped<LeadService>();
+builder.Services.AddScoped<ExpenseService>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
