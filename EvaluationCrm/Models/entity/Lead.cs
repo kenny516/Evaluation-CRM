@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EvaluationCrm.Models.entity;
 
-public partial class TriggerLead
+public partial class Lead
 {
     public uint LeadId { get; set; }
 
@@ -27,9 +27,13 @@ public partial class TriggerLead
 
     public DateTime? CreatedAt { get; set; }
 
+    public uint? ExpenseId { get; set; }
+
     public virtual Customer Customer { get; set; } = null!;
 
     public virtual User? Employee { get; set; }
+
+    public virtual Expense? Expense { get; set; }
 
     public virtual ICollection<File> Files { get; set; } = new List<File>();
 

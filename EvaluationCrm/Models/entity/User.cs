@@ -39,13 +39,13 @@ public partial class User
 
     public virtual ICollection<TriggerContract> TriggerContracts { get; set; } = new List<TriggerContract>();
 
-    public virtual ICollection<TriggerLead> TriggerLeadEmployees { get; set; } = new List<TriggerLead>();
+    public virtual ICollection<Lead> TriggerLeadEmployees { get; set; } = new List<Lead>();
 
-    public virtual ICollection<TriggerLead> TriggerLeadUsers { get; set; } = new List<TriggerLead>();
+    public virtual ICollection<Lead> TriggerLeadUsers { get; set; } = new List<Lead>();
 
-    public virtual ICollection<TriggerTicket> TriggerTicketEmployees { get; set; } = new List<TriggerTicket>();
+    public virtual ICollection<Ticket> TriggerTicketEmployees { get; set; } = new List<Ticket>();
 
-    public virtual ICollection<TriggerTicket> TriggerTicketManagers { get; set; } = new List<TriggerTicket>();
+    public virtual ICollection<Ticket> TriggerTicketManagers { get; set; } = new List<Ticket>();
 
     public virtual ICollection<UserProfile> UserProfiles { get; set; } = new List<UserProfile>();
 

@@ -37,7 +37,7 @@ public partial class TriggerContract
 
     public virtual ICollection<GoogleDriveFile> GoogleDriveFiles { get; set; } = new List<GoogleDriveFile>();
 
-    public virtual TriggerLead? Lead { get; set; }
+    public virtual Lead? Lead { get; set; }
 
     public virtual User? User { get; set; }
 }

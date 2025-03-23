@@ -13,5 +13,5 @@ public partial class LeadAction
 
     public DateTime? DateTime { get; set; }
 
-    public virtual TriggerLead Lead { get; set; } = null!;
+    public virtual Lead Lead { get; set; } = null!;
 }

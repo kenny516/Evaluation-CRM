@@ -19,5 +19,5 @@ public partial class File
 
     public virtual TriggerContract? Contract { get; set; }
 
-    public virtual TriggerLead? Lead { get; set; }
+    public virtual Lead? Lead { get; set; }
 }
