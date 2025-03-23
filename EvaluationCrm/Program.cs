@@ -9,9 +9,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), 
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
 
+builder.Services.AddHttpClient();
+
 // injection de dependance
 builder.Services.AddScoped<RoleService>();
 builder.Services.AddScoped<RoleRepository>();
+builder.Services.AddTransient<ParameterService>();
 
 
 // Add services to the container.
