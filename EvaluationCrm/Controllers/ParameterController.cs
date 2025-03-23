@@ -16,10 +16,13 @@ public class ParameterController : Controller
     [HttpPost]
     public IActionResult Edit(Parameter parameter)
     {
-        Console.WriteLine(parameter);
+        if (parameter.parameterValue < 0 || parameter.parameterValue > 10)
+        {
+            ModelState.AddModelError("parameterValue", "The parameter value must be between 0 and 10.");
+            return View(parameter);
+        }
         _parameterService.UpdateParameterThresholdAlert(parameter.parameterValue);
         return RedirectToAction("Edit", "Parameter");
-        
     }
     
     [HttpGet]
