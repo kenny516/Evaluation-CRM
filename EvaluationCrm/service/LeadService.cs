@@ -22,4 +22,16 @@ public class LeadService
         _httpClient.DeleteAsync($"http://localhost:8080/api/expense/delete-lead?leadId={leadId}");
     }
     
+    
+    // Dashboard Data
+    
+    public Decimal TotalLead(List<Lead> leads)
+    {
+        Decimal total = 0;
+        foreach (var lead in leads)
+        {
+            total += lead.Expense?.Amount ?? 0 ;
+        }
+        return total;
+    }
 }
