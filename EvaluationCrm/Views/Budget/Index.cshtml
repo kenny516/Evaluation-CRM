@@ -1,0 +1,41 @@
+@model List<EvaluationCrm.Models.entity.Budget>
+@{
+    ViewData["Title"] = "Liste des Budgets";
+}
+
+<div class="container-fluid">
+    <h2>@ViewData["Title"]</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Montant</th>
+                <th>Client</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var budget in Model)
+                {
+                    <tr>
+                        <td>@budget.Title</td>
+                        <td>@budget.Amount.ToString("C")</td>
+                        <td>@budget.Customer.Name</td>
+                        <td>@budget.StartDate</td>
+                        <td>@budget.EndDate</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3" class="text-center">Aucun budget trouvé</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
