@@ -37,13 +37,15 @@ public partial class Customer
 
     public int? ProfileId { get; set; }
 
+    public virtual ICollection<Budget> Budgets { get; set; } = new List<Budget>();
+
     public virtual CustomerLoginInfo? Profile { get; set; }
 
     public virtual ICollection<TriggerContract> TriggerContracts { get; set; } = new List<TriggerContract>();
 
-    public virtual ICollection<TriggerLead> TriggerLeads { get; set; } = new List<TriggerLead>();
+    public virtual ICollection<Lead> TriggerLeads { get; set; } = new List<Lead>();
 
-    public virtual ICollection<TriggerTicket> TriggerTickets { get; set; } = new List<TriggerTicket>();
+    public virtual ICollection<Ticket> TriggerTickets { get; set; } = new List<Ticket>();
 
     public virtual User? User { get; set; }
 }
