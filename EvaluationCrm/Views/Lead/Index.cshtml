@@ -40,10 +40,13 @@
                         <td>@lead.CreatedAt</td>
                         <td>@lead.Expense?.Amount</td>
                         <td>
-                            <a href="@Url.Action("Edit", "Expense", new { leadId = lead.LeadId, expenseId = lead.Expense?.ExpenseId })"
-                               class="btn btn-warning">
-                                <i class="bi bi-pencil-square"></i> Edit
-                            </a>
+                            @if (lead.Expense != null)
+                            {
+                                <a href="@Url.Action("Edit", "Expense", new { leadId = lead.LeadId, expenseId = lead.Expense?.ExpenseId })"
+                                   class="btn btn-warning">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                            }
                             <a href="@Url.Action("Delete", "Lead", new { leadId = lead.LeadId })"
                                class="btn btn-danger">
                                 <i class="bi bi-trash"></i> Edit
