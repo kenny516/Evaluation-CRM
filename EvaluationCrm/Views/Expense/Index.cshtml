@@ -1,3 +1,4 @@
+@model List<EvaluationCrm.Models.entity.Expense>
 @{
     ViewData["Title"] = "Dépenses";
 }
@@ -17,21 +18,29 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Ticket</th>
+                            <th>Budget</th>
                             <th>Description</th>
-                            <th>Montant</th>
+                            <th>Amount</th>
                             <th>Date</th>
-                            <th>Statut</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
+                    @foreach(var expense in Model)
+                    {
                         <tr>
-                            <td colspan="7" class="text-center py-4">
-                                <i class="bi bi-cash text-muted fs-1 d-block"></i>
-                                <p class="text-muted">Aucune dépense trouvée</p>
-                            </td>
+                            <td>@expense.ExpenseId</td>
+                            <td>@expense.Budget.Amount</td>
+                            <td>@expense.Description</td>
+                            <td>@expense.Amount</td>
+                            <td>@expense.DateExpense</td>
                         </tr>
+                    }
+                    <tr>
+                        <td colspan="7" class="text-center py-4">
+                            <i class="bi bi-cash text-muted fs-1 d-block"></i>
+                            <p class="text-muted">Aucune dépense trouvée</p>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
