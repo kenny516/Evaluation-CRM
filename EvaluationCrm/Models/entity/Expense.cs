@@ -15,7 +15,7 @@ public partial class Expense
 
     public uint? BudgetId { get; set; }
     
-    public virtual Budget Budget { get; set; } = null!;
+    public virtual Budget Budget { get; set; } = null;
     public virtual Customer Customer { get; set; } = null!;
 
     public virtual ICollection<Lead> TriggerLeads { get; set; } = new List<Lead>();
