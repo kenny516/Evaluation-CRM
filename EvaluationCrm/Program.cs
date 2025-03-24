@@ -1,5 +1,26 @@
+using EvaluationCrm.Data;
+using EvaluationCrm.Models.entity;
+using EvaluationCrm.repository;
+using EvaluationCrm.service;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), 
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
+
+builder.Services.AddHttpClient();
+
+// injection de dependance
+builder.Services.AddScoped<RoleService>();
+builder.Services.AddScoped<RoleRepository>();
+builder.Services.AddTransient<ParameterService>();
+builder.Services.AddScoped<TicketService>();
+builder.Services.AddScoped<LeadService>();
+builder.Services.AddScoped<ExpenseService>();
+builder.Services.AddScoped<BudgetService>();
+builder.Services.AddScoped<UserService>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -22,6 +43,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Login}/{action=Index}/{id?}");
 
 app.Run();

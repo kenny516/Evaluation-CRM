@@ -1,0 +1,65 @@
+@model List<EvaluationCrm.Models.entity.Ticket>
+@{
+    ViewData["Title"] = "Tickets";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-4">Tickets</h1>
+        <button class="btn btn-primary">
+            <i class="bi bi-plus-lg"></i> Nouveau ticket
+        </button>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Subject</th>
+                        <th>Description</th>
+                        <th>Statut</th>
+                        <th>Priority</th>
+                        <th>Customer</th>
+                        <th>Employee</th>
+                        <th>Created At</th>
+                        <th>Expense</th>
+                        <th>Edit Expense</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var ticket in Model)
+                    {
+                        <tr>
+                            <td>@ticket.TicketId</td>
+                            <td>@ticket.Subject</td>
+                            <td>@ticket.Description</td>
+                            <td>@ticket.Status</td>
+                            <td>@ticket.Priority</td>
+                            <td>@ticket.Customer.Name</td>
+                            <td>@ticket.Employee?.Username</td>
+                            <td>@ticket.CreatedAt</td>
+                            <td>@ticket.Expense?.Amount</td>
+                            <td>
+                                @if (ticket.Expense != null)
+                                {
+                                    <a href="@Url.Action("Edit", "Expense", new { ticketId = ticket.TicketId, expenseId = ticket.Expense?.ExpenseId })"
+                                       class="btn btn-warning">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </a>
+                                }
+                                <a href="@Url.Action("Delete", "Ticket", new { ticketId = ticket.TicketId })"
+                                   class="btn btn-danger">
+                                    <i class="bi bi-trash"></i> DELETE
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
