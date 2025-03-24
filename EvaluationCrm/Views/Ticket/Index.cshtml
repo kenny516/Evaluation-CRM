@@ -25,7 +25,7 @@
                         <th>Customer</th>
                         <th>Employee</th>
                         <th>Created At</th>
-                        <th>Dépenses</th>
+                        <th>Expense</th>
                         <th>Edit Expense</th>
                     </tr>
                     </thead>
@@ -43,10 +43,13 @@
                             <td>@ticket.CreatedAt</td>
                             <td>@ticket.Expense?.Amount</td>
                             <td>
-                                <a href="@Url.Action("Edit", "Expense", new { ticketId = ticket.TicketId, expenseId = ticket.Expense?.ExpenseId })"
-                                   class="btn btn-warning">
-                                    <i class="bi bi-pencil-square"></i> Edit
-                                </a>
+                                @if (ticket.Expense != null)
+                                {
+                                    <a href="@Url.Action("Edit", "Expense", new { ticketId = ticket.TicketId, expenseId = ticket.Expense?.ExpenseId })"
+                                       class="btn btn-warning">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </a>
+                                }
                                 <a href="@Url.Action("Delete", "Ticket", new { ticketId = ticket.TicketId })"
                                    class="btn btn-danger">
                                     <i class="bi bi-trash"></i> DELETE

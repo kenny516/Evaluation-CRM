@@ -13,27 +13,28 @@
 
 <div class="container-fluid">
     <!-- Date Range Filter -->
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Filtrer par date</h5>
-                    <div class="input-group">
-                        <input type="date" class="form-control" id="startDate">
-                        <span class="input-group-text">à</span>
-                        <input type="date" class="form-control" id="endDate">
-                        <button class="btn btn-primary" id="filterBtn">Filtrer</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @* <div class="row mb-4"> *@
+    @*     <div class="col-md-4"> *@
+    @*         <div class="card"> *@
+    @*             <div class="card-body"> *@
+    @*                 <h5 class="card-title">Filtrer par date</h5> *@
+    @*                 <div class="input-group"> *@
+    @*                     <input type="date" class="form-control" id="startDate"> *@
+    @*                     <span class="input-group-text">à</span> *@
+    @*                     <input type="date" class="form-control" id="endDate"> *@
+    @*                     <button class="btn btn-primary" id="filterBtn">Filtrer</button> *@
+    @*                 </div> *@
+    @*             </div> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* </div> *@
 
     <!-- Summary Cards -->
     <div class="row mb-4">
         <div class="col-md-4">
             <div class="card bg-primary text-white">
-                <div class="card-body" onclick="window.location.href='@Url.Action("Index", "Ticket")';" style="cursor: pointer;">
+                <div class="card-body" onclick="window.location.href='@Url.Action("Index", "Ticket")';"
+                     style="cursor: pointer;">
                     <h5 class="card-title">Total Dépenses Tickets</h5>
                     <h2 class="card-text">@Model.TotalTicketExpenses.ToString("C")</h2>
                 </div>
@@ -41,7 +42,8 @@
         </div>
         <div class="col-md-4">
             <div class="card bg-success text-white">
-                <div class="card-body" onclick="window.location.href='@Url.Action("Index", "Lead")';" style="cursor: pointer;">
+                <div class="card-body" onclick="window.location.href='@Url.Action("Index", "Lead")';"
+                     style="cursor: pointer;">
                     <h5 class="card-title">Total Dépenses Leads</h5>
                     <h2 class="card-text">@Model.TotalLeadExpenses.ToString("C")</h2>
                 </div>
@@ -49,7 +51,8 @@
         </div>
         <div class="col-md-4">
             <div class="card bg-info text-white">
-                <div class="card-body" onclick="window.location.href='@Url.Action("Index","Budget")';" style="cursor: pointer;">
+                <div class="card-body" onclick="window.location.href='@Url.Action("Index", "Budget")';"
+                     style="cursor: pointer;">
                     <h5 class="card-title">Total Budget</h5>
                     <h2 class="card-text">@Model.TotalBudget.ToString("C")</h2>
                 </div>
@@ -79,12 +82,23 @@
                 </div>
             </div>
         </div>
+
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Budget par Client</h5>
                     <div class="chart-container">
                         <canvas id="budgetChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Ratio Tickets/Leads</h5>
+                    <div class="chart-container">
+                        <canvas id="ratioChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -111,15 +125,15 @@
                 },
                 tooltip: {
                     callbacks: {
-                        label: function(context) {
+                        label: function (context) {
                             let label = context.label || '';
                             if (label) {
                                 label += ': ';
                             }
                             const value = context.parsed;
-                            label += new Intl.NumberFormat('fr-FR', { 
-                                style: 'currency', 
-                                currency: 'MGA' 
+                            label += new Intl.NumberFormat('fr-FR', {
+                                style: 'currency',
+                                currency: 'MGA'
                             }).format(value);
                             return label;
                         }
@@ -128,8 +142,9 @@
             }
         };
 
+
         // Fonction pour créer un graphique avec des données par défaut si nécessaire
-        function createChart(ctx, data, label, color) {
+        function createChart(ctx, data, label, color, type) {
             if (!hasData(data)) {
                 data = {
                     labels: ['Aucune donnée'],
@@ -144,7 +159,7 @@
             }
 
             return new Chart(ctx, {
-                type: 'pie',
+                type: type,
                 data: data,
                 options: commonOptions
             });
@@ -154,6 +169,7 @@
         const ticketData = @Json.Serialize(Model.TicketExpensesByCustomer) || {};
         const leadData = @Json.Serialize(Model.LeadExpensesByCustomer) || {};
         const budgetData = @Json.Serialize(Model.BudgetByCustomer) || {};
+
 
         // Création des configurations de données avec plusieurs couleurs
         const ticketChartData = hasData(ticketData) ? {
@@ -223,7 +239,7 @@
         } : null;
 
         // Initialiser les graphiques une fois que le DOM est chargé
-        window.addEventListener('DOMContentLoaded', function() {
+        window.addEventListener('DOMContentLoaded', function () {
             const charts = [
                 {
                     id: 'ticketExpensesChart',
@@ -232,7 +248,8 @@
                     color: {
                         backgroundColor: 'rgba(54, 162, 235, 0.8)',
                         borderColor: 'rgba(54, 162, 235, 1)'
-                    }
+                    },
+                    type: 'pie'
                 },
                 {
                     id: 'leadExpensesChart',
@@ -241,7 +258,8 @@
                     color: {
                         backgroundColor: 'rgba(75, 192, 192, 0.8)',
                         borderColor: 'rgba(75, 192, 192, 1)'
-                    }
+                    },
+                    type: 'pie'
                 },
                 {
                     id: 'budgetChart',
@@ -250,23 +268,45 @@
                     color: {
                         backgroundColor: 'rgba(255, 159, 64, 0.8)',
                         borderColor: 'rgba(255, 159, 64, 1)'
-                    }
+                    },
+                    type: 'doughnut'
+                },
+                {
+                    id: 'ratioChart',
+                    data: {
+                        labels: ['Tickets', 'Leads'],
+                        datasets: [{
+                            data: [@Model.TotalTicketExpenses, @Model.TotalLeadExpenses],
+                            backgroundColor: [
+                                'rgba(54, 162, 235, 0.8)', // Bleu pour Tickets
+                                'rgba(75, 192, 192, 0.8)'  // Vert pour Leads
+                            ],
+                            borderColor: [
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(75, 192, 192, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    label: 'Répartition des dépenses',
+                    type: 'pie' // ou 'doughnut'
                 }
+
             ];
 
             charts.forEach(chart => {
                 const ctx = document.getElementById(chart.id);
                 if (ctx) {
-                    createChart(ctx, chart.data, chart.label, chart.color);
+                    createChart(ctx, chart.data, chart.label, chart.color, chart.type);
                 }
             });
         });
 
         // Gestionnaire du filtre de date
-        document.getElementById('filterBtn').addEventListener('click', function() {
+        document.getElementById('filterBtn').addEventListener('click', function () {
             const startDate = document.getElementById('startDate').value;
             const endDate = document.getElementById('endDate').value;
-            
+
             if (startDate && endDate) {
                 console.log('Filtrage:', startDate, endDate);
             }
