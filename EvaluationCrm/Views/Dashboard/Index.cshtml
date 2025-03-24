@@ -13,21 +13,21 @@
 
 <div class="container-fluid">
     <!-- Date Range Filter -->
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Filtrer par date</h5>
-                    <div class="input-group">
-                        <input type="date" class="form-control" id="startDate">
-                        <span class="input-group-text">à</span>
-                        <input type="date" class="form-control" id="endDate">
-                        <button class="btn btn-primary" id="filterBtn">Filtrer</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @* <div class="row mb-4"> *@
+    @*     <div class="col-md-4"> *@
+    @*         <div class="card"> *@
+    @*             <div class="card-body"> *@
+    @*                 <h5 class="card-title">Filtrer par date</h5> *@
+    @*                 <div class="input-group"> *@
+    @*                     <input type="date" class="form-control" id="startDate"> *@
+    @*                     <span class="input-group-text">à</span> *@
+    @*                     <input type="date" class="form-control" id="endDate"> *@
+    @*                     <button class="btn btn-primary" id="filterBtn">Filtrer</button> *@
+    @*                 </div> *@
+    @*             </div> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* </div> *@
 
     <!-- Summary Cards -->
     <div class="row mb-4">
@@ -127,9 +127,10 @@
                 }
             }
         };
+        
 
         // Fonction pour créer un graphique avec des données par défaut si nécessaire
-        function createChart(ctx, data, label, color) {
+        function createChart(ctx, data, label, color,type) {
             if (!hasData(data)) {
                 data = {
                     labels: ['Aucune donnée'],
@@ -144,7 +145,7 @@
             }
 
             return new Chart(ctx, {
-                type: 'pie',
+                type: type,
                 data: data,
                 options: commonOptions
             });
@@ -232,7 +233,8 @@
                     color: {
                         backgroundColor: 'rgba(54, 162, 235, 0.8)',
                         borderColor: 'rgba(54, 162, 235, 1)'
-                    }
+                    },
+                    type: 'pie'
                 },
                 {
                     id: 'leadExpensesChart',
@@ -241,7 +243,8 @@
                     color: {
                         backgroundColor: 'rgba(75, 192, 192, 0.8)',
                         borderColor: 'rgba(75, 192, 192, 1)'
-                    }
+                    },
+                    type: 'pie'
                 },
                 {
                     id: 'budgetChart',
@@ -250,14 +253,15 @@
                     color: {
                         backgroundColor: 'rgba(255, 159, 64, 0.8)',
                         borderColor: 'rgba(255, 159, 64, 1)'
-                    }
+                    },
+                    type: 'doughnut'
                 }
             ];
 
             charts.forEach(chart => {
                 const ctx = document.getElementById(chart.id);
                 if (ctx) {
-                    createChart(ctx, chart.data, chart.label, chart.color);
+                    createChart(ctx, chart.data, chart.label, chart.color,chart.type);
                 }
             });
         });
