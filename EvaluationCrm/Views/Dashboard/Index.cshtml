@@ -170,6 +170,9 @@
         const leadData = @Json.Serialize(Model.LeadExpensesByCustomer) || {};
         const budgetData = @Json.Serialize(Model.BudgetByCustomer) || {};
 
+        const ticketValue = parseFloat('@Model.TotalTicketExpenses'.replace(/\s/g, '')) || 0;
+        const leadValue = parseFloat('@Model.TotalLeadExpenses'.replace(/\s/g, '')) || 0;
+
 
         // Création des configurations de données avec plusieurs couleurs
         const ticketChartData = hasData(ticketData) ? {
@@ -276,24 +279,23 @@
                     data: {
                         labels: ['Tickets', 'Leads'],
                         datasets: [{
-                            data: [@Model.TotalTicketExpenses, @Model.TotalLeadExpenses],
+                            data: [ticketValue, leadValue],
                             backgroundColor: [
                                 'rgba(255, 159, 64, 0.8)',
                                 'rgba(255, 99, 132, 0.8)',
                             ],
                             borderColor: [
-                                'rgba(255, 159, 64, 0.8)',
-                                'rgba(255, 99, 132, 0.8)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(255, 99, 132, 1)',
                             ],
                             borderWidth: 1
                         }]
                     },
                     label: 'Répartition des dépenses',
-                    type: 'pie' // ou 'doughnut'
+                    type: 'pie'
                 }
 
             ];
-
             charts.forEach(chart => {
                 const ctx = document.getElementById(chart.id);
                 if (ctx) {
