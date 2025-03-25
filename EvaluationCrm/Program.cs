@@ -22,7 +22,7 @@ builder.Services.AddSession(options =>
 // injection de dependance
 builder.Services.AddScoped<RoleService>();
 builder.Services.AddScoped<RoleRepository>();
-builder.Services.AddTransient<ParameterService>();
+builder.Services.AddScoped<ParameterService>();
 builder.Services.AddScoped<TicketService>();
 builder.Services.AddScoped<LeadService>();
 builder.Services.AddScoped<ExpenseService>();
