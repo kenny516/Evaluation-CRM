@@ -13,13 +13,13 @@ public class LeadService
     
     public List<Lead>? GetLeads()
     {
-        var content =  _httpClient.GetFromJsonAsync<List<Lead>>("http://localhost:8080/api/expense/lead").Result;
+        var content =  _httpClient.GetFromJsonAsync<List<Lead>>("http://localhost:8080/api/lead").Result;
         return content;
     }
 
     public void DeleteLead(Int16 leadId)
     {
-        _httpClient.DeleteAsync($"http://localhost:8080/api/expense/delete-lead?leadId={leadId}");
+        _httpClient.DeleteAsync($"http://localhost:8080/api/lead?leadId={leadId}");
     }
     
     

@@ -5,10 +5,7 @@
 
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="display-4">Leads</h1>
-        <button class="btn btn-primary">
-            <i class="bi bi-plus-lg"></i> Nouveau lead
-        </button>
+        <h2 class="display-4">Leads</h2>
     </div>
 
     <div class="card shadow-sm">
@@ -21,6 +18,7 @@
                         <th>Name</th>
                         <th>Phone</th>
                         <th>Employee</th>
+                        <th>Customer</th>
                         <th>Status</th>
                         <th>Meeting</th>
                         <th>Created At</th>
@@ -31,27 +29,30 @@
                     <tbody>
                     @foreach (var lead in Model)
                     {
-                        <td>@lead.LeadId</td>
-                        <td>@lead.Name</td>
-                        <td>@lead.Phone</td>
-                        <td>@lead.Employee?.Username</td>
-                        <td>@lead.Status</td>
-                        <td>@lead.MeetingId</td>
-                        <td>@lead.CreatedAt</td>
-                        <td>@lead.Expense?.Amount</td>
-                        <td>
-                            @if (lead.Expense != null)
-                            {
-                                <a href="@Url.Action("Edit", "Expense", new { leadId = lead.LeadId, expenseId = lead.Expense?.ExpenseId })"
-                                   class="btn btn-warning">
-                                    <i class="bi bi-pencil-square"></i> Edit
+                        <tr>
+                            <td>@lead.LeadId</td>
+                            <td>@lead.Name</td>
+                            <td>@lead.Phone</td>
+                            <td>@lead.Employee?.Username</td>
+                            <td>@lead.Customer.Name</td>
+                            <td>@lead.Status</td>
+                            <td>@lead.MeetingId</td>
+                            <td>@lead.CreatedAt</td>
+                            <td>@lead.Expense?.Amount</td>
+                            <td>
+                                @if (lead.Expense != null)
+                                {
+                                    <a href="@Url.Action("Edit", "Expense", new { leadId = lead.LeadId, expenseId = lead.Expense?.ExpenseId })"
+                                       class="btn btn-warning">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </a>
+                                }
+                                <a href="@Url.Action("Delete", "Lead", new { leadId = lead.LeadId })"
+                                   class="btn btn-danger">
+                                    <i class="bi bi-trash"></i> Delete
                                 </a>
-                            }
-                            <a href="@Url.Action("Delete", "Lead", new { leadId = lead.LeadId })"
-                               class="btn btn-danger">
-                                <i class="bi bi-trash"></i> Delete
-                            </a>
-                        </td>
+                            </td>
+                        </tr>
                     }
 
                     </tbody>

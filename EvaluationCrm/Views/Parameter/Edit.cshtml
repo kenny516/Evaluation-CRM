@@ -3,39 +3,83 @@
     ViewBag.Title = "Edit";
 }
 
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Parameter Threshold Alert</title>
-</head>
 
 <body class="bg-light">
+<div>
+    <h2 class="display-4 mb-0">Paramètres</h2>
+</div>
 <div class="container mt-5">
-    <div class="card shadow-sm">
-        <div class="card-header text-center bg-primary text-white">
-            <h2>Edit Parameter Threshold Alert</h2>
-        </div>
-        <div class="card-body">
-            <form asp-controller="Parameter" asp-action="Edit" method="post">
-                <div class="mb-3">
-                    <label asp-for="parameterKey" class="form-label">Parameter Key</label>
-                    <input asp-for="parameterKey" class="form-control" readonly="readonly" />
+    <div class="container-fluid">
+
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0"><i class="bi bi-sliders"></i> Configuration des seuils</h5>
+                    </div>
+                    <div class="card-body">
+                        <form asp-controller="Parameter" asp-action="Edit" method="post">
+                            <input type="hidden" asp-for="parameterKey"/>
+
+                            <div class="mb-4">
+                                <label asp-for="parameterValue" class="form-label">Seuil d'alerte (%)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-percent"></i></span>
+                                    <input asp-for="parameterValue" type="number" class="form-control" min="0" max="100" step="1"
+                                           onchange="updateSlider(this.value)"/>
+                                </div>
+                                <div class="mt-3">
+                                    <input type="range" class="form-range" min="0" max="100" step="1"
+                                           value="@Model.parameterValue"
+                                           onchange="updateInput(this.value)"
+                                           oninput="updateInput(this.value)"
+                                           id="thresholdSlider">
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <small class="text-muted">0%</small>
+                                    <small class="text-muted">50%</small>
+                                    <small class="text-muted">100%</small>
+                                </div>
+                                @if (!ViewData.ModelState.IsValid)
+                                {
+                                    <div class="alert alert-danger mt-2">
+                                        <span asp-validation-for="parameterValue" class="text-danger"></span>
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="alert alert-info">
+                                <i class="bi bi-info-circle"></i> Ce seuil détermine le pourcentage d'utilisation du budget à partir duquel le système enverra des alertes.
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-save"></i> Enregistrer les modifications
+                                </button>
+                                <a href="@Url.Action("Index", "Dashboard")" class="btn btn-outline-secondary">
+                                    <i class="bi bi-arrow-left"></i> Retour au tableau de bord
+                                </a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                
-                <div class="mb-3">
-                    <label asp-for="parameterValue" class="form-label">Valeur</label>
-                    <input asp-for="parameterValue" type="number" class="form-control" />
-                </div>
-                
-                <button type="submit" class="btn btn-primary btn-block">Save</button>
-            </form>
+            </div>
         </div>
     </div>
 </div>
 
+@section Scripts {
+    <script>
+        function updateSlider(value) {
+            document.getElementById('thresholdSlider').value = value;
+        }
+
+        function updateInput(value) {
+            document.querySelector('input[name="parameterValue"]').value = value;
+        }
+    </script>
+}
+
 </body>
 
-</html>
