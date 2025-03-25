@@ -3,12 +3,12 @@
     ViewData["Title"] = "Tickets";
 }
 
-<div class="container-fluid">
+<div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="display-4">Tickets</h2>
     </div>
 
-    <div class="card shadow-sm">
+    <div class="card">
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover">
@@ -23,7 +23,7 @@
                         <th>Employee</th>
                         <th>Created At</th>
                         <th>Expense</th>
-                        <th>Edit Expense</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -31,25 +31,37 @@
                     {
                         <tr>
                             <td>@ticket.TicketId</td>
-                            <td>@ticket.Subject</td>
-                            <td>@ticket.Description</td>
-                            <td>@ticket.Status</td>
-                            <td>@ticket.Priority</td>
+                            <td class="fw-bold">@ticket.Subject</td>
+                            <td class="text-truncate" style="max-width: 150px;">@ticket.Description</td>
+                            <td>
+                                <span class="badge bg-@(ticket.Status == "Ouvert" ? "success" : 
+                                               ticket.Status == "En cours" ? "primary" : 
+                                               ticket.Status == "En attente" ? "warning" : "secondary")">
+                                    @ticket.Status
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge bg-@(ticket.Priority == "Haute" ? "danger" : 
+                                               ticket.Priority == "Moyenne" ? "warning" : 
+                                               ticket.Priority == "Basse" ? "info" : "secondary")">
+                                    @ticket.Priority
+                                </span>
+                            </td>
                             <td>@ticket.Customer.Name</td>
                             <td>@ticket.Employee?.Username</td>
                             <td>@ticket.CreatedAt</td>
-                            <td>@ticket.Expense?.Amount</td>
+                            <td class="text-primary fw-bold">@(ticket.Expense != null ? ticket.Expense.Amount.ToString("C") : "-")</td>
                             <td>
                                 @if (ticket.Expense != null)
                                 {
                                     <a href="@Url.Action("Edit", "Expense", new { ticketId = ticket.TicketId, expenseId = ticket.Expense?.ExpenseId })"
-                                       class="btn btn-warning">
-                                        <i class="bi bi-pencil-square"></i> Edit
+                                       class="btn btn-sm btn-warning me-1">
+                                        <i class="bi bi-pencil-square"></i>
                                     </a>
                                 }
                                 <a href="@Url.Action("Delete", "Ticket", new { ticketId = ticket.TicketId })"
-                                   class="btn btn-danger">
-                                    <i class="bi bi-trash"></i> DELETE
+                                   class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash"></i>
                                 </a>
                             </td>
                         </tr>
