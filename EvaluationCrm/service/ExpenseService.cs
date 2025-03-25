@@ -29,7 +29,7 @@ public class ExpenseService
         {
             var jsonContent = JsonContent.Create(expense);
             var response =
-                await _httpClient.PutAsync("http://localhost:8080/api/expense/update-expense", jsonContent);
+                await _httpClient.PutAsync("http://localhost:8080/api/expense/update", jsonContent);
             if (response.IsSuccessStatusCode)
             {
                 var updatedExpense = await response.Content.ReadFromJsonAsync<Expense>();
