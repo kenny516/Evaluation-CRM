@@ -28,6 +28,7 @@ builder.Services.AddScoped<LeadService>();
 builder.Services.AddScoped<ExpenseService>();
 builder.Services.AddScoped<BudgetService>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<DashboardService>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

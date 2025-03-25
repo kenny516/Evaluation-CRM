@@ -18,7 +18,6 @@ public class LoginController : Controller
     {
         return View();
     }
-
     [HttpPost]
     public async Task<IActionResult> Login(string email,string password)
     {
@@ -30,7 +29,7 @@ public class LoginController : Controller
            // var currentUser = JsonSerializer.Deserialize<User>(current);
             return RedirectToAction("Index", "Dashboard");
         }
-        ModelState.AddModelError(string.Empty, "Email invalide");
+        ModelState.AddModelError(string.Empty, "Email invalide Or not exist");
         return View("Index");
     }
 }
