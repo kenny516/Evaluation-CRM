@@ -1,72 +1,102 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - EvaluationCRM</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/EvaluationCrm.styles.css" asp-append-version="true"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-controller="Dashboard" asp-action="Index">
-                <i class="bi bi-building"></i> EvaluationCRM
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Dashboard" asp-action="Index">
-                            <i class="bi bi-speedometer2"></i> Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Ticket" asp-action="Index">
-                            <i class="bi bi-ticket"></i> Tickets
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Lead" asp-action="Index">
-                            <i class="bi bi-person-lines-fill"></i> Leads
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Expense" asp-action="Index">
-                            <i class="bi bi-cash"></i> Dépenses
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Parameter" asp-action="Edit">
-                            <i class="bi bi-setting"></i> Parameter
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <!-- Sidebar -->
+    <nav class="sidebar shadow-sm">
+        <a class="sidebar-brand" asp-controller="Dashboard" asp-action="Index">
+            <i class="bi bi-building"></i>
+            <span>EvaluationCRM</span>
+        </a>
+        <hr class="bg-light opacity-10">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Dashboard" ? "active" : "")"
+                   asp-controller="Dashboard" asp-action="Index">
+                    <i class="bi bi-speedometer2"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Ticket" ? "active" : "")"
+                   asp-controller="Ticket" asp-action="Index">
+                    <i class="bi bi-ticket"></i>
+                    <span>Tickets</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Lead" ? "active" : "")"
+                   asp-controller="Lead" asp-action="Index">
+                    <i class="bi bi-person-lines-fill"></i>
+                    <span>Leads</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Expense" ? "active" : "")"
+                   asp-controller="Expense" asp-action="Index">
+                    <i class="bi bi-cash"></i>
+                    <span>Dépenses</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Parameter" ? "active" : "")"
+                   asp-controller="Parameter" asp-action="Edit">
+                    <i class="bi bi-gear"></i>
+                    <span>Paramètres</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Import" ? "active" : "")"
+                   asp-controller="Import" asp-action="Index">
+                    <i class="bi bi-upload"></i>
+                    <span>Import data</span>
+                </a>
+            </li>
+        </ul>
     </nav>
-</header>
-<div class="container-fluid py-4">
-    <main role="main">
-        @RenderBody()
-    </main>
-</div>
 
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2025 - EvaluationCrm
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <button class="btn btn-link text-primary d-md-none p-0" type="button" id="sidebarToggle">
+                <i class="bi bi-list fs-4"></i>
+            </button>
+            <h1 class="h3 mb-0">@ViewData["Title"]</h1>
+        </div>
+        
+        <div class="container-fluid p-0">
+            <main role="main">
+                @RenderBody()
+            </main>
+        </div>
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="text-muted small">&copy; @DateTime.Now.Year - EvaluationCrm</div>
+            </div>
+        </footer>
     </div>
-</footer>
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <script>
+        document.getElementById('sidebarToggle')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('.sidebar')?.classList.toggle('active');
+            document.querySelector('.content-wrapper')?.classList.toggle('active');
+        });
+    </script>
+    
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

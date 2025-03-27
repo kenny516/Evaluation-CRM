@@ -13,13 +13,13 @@ public class TicketService
     
     public List<Ticket>? GetTickets()
     {
-        var content =  _httpClient.GetFromJsonAsync<List<Ticket>>("http://localhost:8080/api/expense/ticket").Result;
+        var content =  _httpClient.GetFromJsonAsync<List<Ticket>>("http://localhost:8080/api/ticket").Result;
         return content;
     }
 
     public void DeleteTicket(Int16 ticketId)
     {
-        _httpClient.DeleteAsync($"http://localhost:8080/api/expense/delete-ticket?ticketId={ticketId}");
+        _httpClient.DeleteAsync($"http://localhost:8080/api/ticket?ticketId={ticketId}");
     }
 
     

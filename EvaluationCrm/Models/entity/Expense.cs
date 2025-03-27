@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EvaluationCrm.Models.entity;
 
@@ -7,6 +8,8 @@ public partial class Expense
 {
     public uint ExpenseId { get; set; }
 
+    [Required(ErrorMessage = "Le montant est requis.")]
+    [Range(0.01, double.MaxValue, ErrorMessage = "Le montant doit être supérieur à 0.")]
     public decimal Amount { get; set; }
 
     public DateOnly DateExpense { get; set; }

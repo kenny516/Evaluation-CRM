@@ -34,6 +34,7 @@ public partial class Lead
     public virtual User? Employee { get; set; }
 
     public virtual Expense? Expense { get; set; }
+    
 
     public virtual ICollection<File> Files { get; set; } = new List<File>();
 
