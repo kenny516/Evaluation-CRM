@@ -3,12 +3,12 @@
     ViewData["Title"] = "Leads";
 }
 
-<div class="container-fluid">
+<div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="display-4">Leads</h2>
     </div>
 
-    <div class="card shadow-sm">
+    <div class="card">
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover">
@@ -31,30 +31,37 @@
                     {
                         <tr>
                             <td>@lead.LeadId</td>
-                            <td>@lead.Name</td>
-                            <td>@lead.Phone</td>
+                            <td class="fw-bold">@lead.Name</td>
+                            <td><a href="tel:@lead.Phone" class="text-decoration-none">@lead.Phone</a></td>
                             <td>@lead.Employee?.Username</td>
                             <td>@lead.Customer.Name</td>
-                            <td>@lead.Status</td>
+                            <td>
+                                <span class="badge bg-@(lead.Status == "Nouveau" ? "info" : 
+                                               lead.Status == "Contacté" ? "primary" : 
+                                               lead.Status == "Qualifié" ? "warning" :
+                                               lead.Status == "Converti" ? "success" :
+                                               lead.Status == "Perdu" ? "danger" : "secondary")">
+                                    @lead.Status
+                                </span>
+                            </td>
                             <td>@lead.MeetingId</td>
                             <td>@lead.CreatedAt</td>
-                            <td>@lead.Expense?.Amount</td>
+                            <td class="text-primary fw-bold">@(lead.Expense != null ? lead.Expense.Amount.ToString("C") : "-")</td>
                             <td>
                                 @if (lead.Expense != null)
                                 {
                                     <a href="@Url.Action("Edit", "Expense", new { leadId = lead.LeadId, expenseId = lead.Expense?.ExpenseId })"
-                                       class="btn btn-warning">
-                                        <i class="bi bi-pencil-square"></i> Edit
+                                       class="btn btn-sm btn-warning me-1">
+                                        <i class="bi bi-pencil-square"></i>
                                     </a>
                                 }
                                 <a href="@Url.Action("Delete", "Lead", new { leadId = lead.LeadId })"
-                                   class="btn btn-danger">
-                                    <i class="bi bi-trash"></i> Delete
+                                   class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash"></i>
                                 </a>
                             </td>
                         </tr>
                     }
-
                     </tbody>
                 </table>
             </div>

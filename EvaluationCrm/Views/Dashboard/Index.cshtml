@@ -2,37 +2,60 @@
 @{
     ViewData["Title"] = "Dashboard";
 }
-
 <style>
     .chart-container {
         position: relative;
-        height: 300px; /* Hauteur fixe pour le conteneur */
+        height: 300px;
         width: 100%;
+        margin: 1rem 0;
+    }
+
+    .dashboard-card {
+        transition: transform 0.2s ease;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1.5rem;
+    }
+
+    .dashboard-card .card-body {
+        padding: 1.5rem;
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 1.25rem;
+        color: #2c3e50;
+    }
+
+    .summary-card {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .summary-card .card-body {
+        padding: 1.5rem;
+    }
+
+    .summary-card h5 {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.5rem;
+    }
+
+    .summary-card h2 {
+        font-size: 1.8rem;
+        margin: 0;
     }
 </style>
 
-<div class="container-fluid">
-    <!-- Date Range Filter -->
-    @* <div class="row mb-4"> *@
-    @*     <div class="col-md-4"> *@
-    @*         <div class="card"> *@
-    @*             <div class="card-body"> *@
-    @*                 <h5 class="card-title">Filtrer par date</h5> *@
-    @*                 <div class="input-group"> *@
-    @*                     <input type="date" class="form-control" id="startDate"> *@
-    @*                     <span class="input-group-text">à</span> *@
-    @*                     <input type="date" class="form-control" id="endDate"> *@
-    @*                     <button class="btn btn-primary" id="filterBtn">Filtrer</button> *@
-    @*                 </div> *@
-    @*             </div> *@
-    @*         </div> *@
-    @*     </div> *@
-    @* </div> *@
-
+<div class="container-fluid py-4">
     <!-- Summary Cards -->
     <div class="row mb-4">
         <div class="col-md-4">
-            <div class="card bg-primary text-white">
+            <div class="card summary-card bg-primary text-white">
                 <div class="card-body" onclick="window.location.href='@Url.Action("Index", "Ticket")';"
                      style="cursor: pointer;">
                     <h5 class="card-title">Total Dépenses Tickets</h5>
@@ -41,7 +64,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card bg-success text-white">
+            <div class="card summary-card bg-success text-white">
                 <div class="card-body" onclick="window.location.href='@Url.Action("Index", "Lead")';"
                      style="cursor: pointer;">
                     <h5 class="card-title">Total Dépenses Leads</h5>
@@ -50,7 +73,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card bg-info text-white">
+            <div class="card summary-card bg-info text-white">
                 <div class="card-body" onclick="window.location.href='@Url.Action("Index", "Budget")';"
                      style="cursor: pointer;">
                     <h5 class="card-title">Total Budget</h5>
@@ -62,8 +85,8 @@
 
     <!-- Charts -->
     <div class="row">
-        <div class="col-md-4">
-            <div class="card">
+        <div class="col-md-6 col-lg-4">
+            <div class="card dashboard-card">
                 <div class="card-body">
                     <h5 class="card-title">Dépenses Tickets par Client</h5>
                     <div class="chart-container">
@@ -72,8 +95,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card">
+        <div class="col-md-6 col-lg-4">
+            <div class="card dashboard-card">
                 <div class="card-body">
                     <h5 class="card-title">Dépenses Leads par Client</h5>
                     <div class="chart-container">
@@ -82,9 +105,8 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-md-4">
-            <div class="card">
+        <div class="col-md-6 col-lg-4">
+            <div class="card dashboard-card">
                 <div class="card-body">
                     <h5 class="card-title">Budget par Client</h5>
                     <div class="chart-container">
@@ -93,8 +115,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card">
+        <div class="col-md-6 col-lg-4">
+            <div class="card dashboard-card">
                 <div class="card-body">
                     <h5 class="card-title">Ratio Tickets/Leads</h5>
                     <div class="chart-container">
@@ -114,23 +136,72 @@
             return data && Object.keys(data).length > 0;
         }
 
+        // Palette de couleurs moderne
+        const modernPalette = {
+            backgrounds: [
+                'rgba(71, 120, 252, 0.8)', // Bleu moderne
+                'rgba(252, 119, 83, 0.8)', // Orange corail
+                'rgba(46, 213, 115, 0.8)', // Vert émeraude
+                'rgba(255, 182, 71, 0.8)', // Jaune ambre
+                'rgba(241, 91, 181, 0.8)', // Rose
+                'rgba(112, 161, 255, 0.8)', // Bleu clair
+                'rgba(51, 203, 203, 0.8)', // Turquoise
+                'rgba(156, 97, 244, 0.8)'  // Violet
+            ],
+            borders: [
+                'rgba(71, 120, 252, 1)',
+                'rgba(252, 119, 83, 1)',
+                'rgba(46, 213, 115, 1)',
+                'rgba(255, 182, 71, 1)',
+                'rgba(241, 91, 181, 1)',
+                'rgba(112, 161, 255, 1)',
+                'rgba(51, 203, 203, 1)',
+                'rgba(156, 97, 244, 1)'
+            ]
+        };
+
         // Configuration commune pour tous les graphiques
         const commonOptions = {
             responsive: true,
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             plugins: {
                 legend: {
                     display: true,
-                    position: 'right'
+                    position: 'bottom',
+                    labels: {
+                        padding: 20,
+                        usePointStyle: true,
+                        pointStyle: 'circle',
+                        font: {
+                            family: "'Segoe UI', sans-serif",
+                            size: 12
+                        }
+                    }
                 },
                 tooltip: {
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                    titleColor: '#2c3e50',
+                    titleFont: {
+                        size: 14,
+                        weight: 'bold',
+                        family: "'Segoe UI', sans-serif"
+                    },
+                    bodyColor: '#2c3e50',
+                    bodyFont: {
+                        size: 13,
+                        family: "'Segoe UI', sans-serif"
+                    },
+                    padding: 12,
+                    boxPadding: 6,
+                    borderColor: '#e9ecef',
+                    borderWidth: 1,
                     callbacks: {
                         label: function (context) {
                             let label = context.label || '';
                             if (label) {
                                 label += ': ';
                             }
-                            const value = context.parsed;
+                            const value = context.parsed || context.raw;
                             label += new Intl.NumberFormat('fr-FR', {
                                 style: 'currency',
                                 currency: 'MGA'
@@ -139,29 +210,47 @@
                         }
                     }
                 }
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true,
+                duration: 1000
+            },
+            elements: {
+                arc: {
+                    borderWidth: 2
+                }
             }
         };
 
-
         // Fonction pour créer un graphique avec des données par défaut si nécessaire
-        function createChart(ctx, data, label, color, type) {
+        function createChart(ctx, data, label, defaultColor, type) {
             if (!hasData(data)) {
                 data = {
                     labels: ['Aucune donnée'],
                     datasets: [{
                         label: label,
                         data: [0],
-                        backgroundColor: [color.backgroundColor],
-                        borderColor: [color.borderColor],
-                        borderWidth: 1
+                        backgroundColor: [modernPalette.backgrounds[0]],
+                        borderColor: [modernPalette.borders[0]],
+                        borderWidth: 2
                     }]
                 };
+            }
+
+            // Ajout des options spécifiques selon le type de graphique
+            const specificOptions = {};
+            if (type === 'doughnut') {
+                specificOptions.cutout = '65%';
             }
 
             return new Chart(ctx, {
                 type: type,
                 data: data,
-                options: commonOptions
+                options: {
+                    ...commonOptions,
+                    ...specificOptions
+                }
             });
         }
 
@@ -169,129 +258,65 @@
         const ticketData = @Json.Serialize(Model.TicketExpensesByCustomer) || {};
         const leadData = @Json.Serialize(Model.LeadExpensesByCustomer) || {};
         const budgetData = @Json.Serialize(Model.BudgetByCustomer) || {};
+        const ticketValue = parseFloat('@Model.TotalTicketExpenses'.replace(/\s/g, '')) || 0;
+        const leadValue = parseFloat('@Model.TotalLeadExpenses'.replace(/\s/g, '')) || 0;
 
+        // Configuration des données avec la nouvelle palette de couleurs
+        function prepareChartData(data, label) {
+            return hasData(data) ? {
+                labels: Object.keys(data),
+                datasets: [{
+                    label: label,
+                    data: Object.values(data),
+                    backgroundColor: modernPalette.backgrounds,
+                    borderColor: modernPalette.borders,
+                    borderWidth: 2
+                }]
+            } : null;
+        }
 
-        // Création des configurations de données avec plusieurs couleurs
-        const ticketChartData = hasData(ticketData) ? {
-            labels: Object.keys(ticketData),
-            datasets: [{
-                data: Object.values(ticketData),
-                backgroundColor: [
-                    'rgba(54, 162, 235, 0.8)',
-                    'rgba(75, 192, 192, 0.8)',
-                    'rgba(255, 206, 86, 0.8)',
-                    'rgba(255, 99, 132, 0.8)',
-                    'rgba(153, 102, 255, 0.8)'
-                ],
-                borderColor: [
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(153, 102, 255, 1)'
-                ],
-                borderWidth: 1
-            }]
-        } : null;
+        const ticketChartData = prepareChartData(ticketData, 'Dépenses Tickets');
+        const leadChartData = prepareChartData(leadData, 'Dépenses Leads');
+        const budgetChartData = prepareChartData(budgetData, 'Budget');
 
-        const leadChartData = hasData(leadData) ? {
-            labels: Object.keys(leadData),
-            datasets: [{
-                data: Object.values(leadData),
-                backgroundColor: [
-                    'rgba(75, 192, 192, 0.8)',
-                    'rgba(255, 99, 132, 0.8)',
-                    'rgba(255, 206, 86, 0.8)',
-                    'rgba(153, 102, 255, 0.8)',
-                    'rgba(54, 162, 235, 0.8)'
-                ],
-                borderColor: [
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(54, 162, 235, 1)'
-                ],
-                borderWidth: 1
-            }]
-        } : null;
-
-        const budgetChartData = hasData(budgetData) ? {
-            labels: Object.keys(budgetData),
-            datasets: [{
-                data: Object.values(budgetData),
-                backgroundColor: [
-                    'rgba(255, 159, 64, 0.8)',
-                    'rgba(255, 99, 132, 0.8)',
-                    'rgba(75, 192, 192, 0.8)',
-                    'rgba(153, 102, 255, 0.8)',
-                    'rgba(255, 206, 86, 0.8)'
-                ],
-                borderColor: [
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 206, 86, 1)'
-                ],
-                borderWidth: 1
-            }]
-        } : null;
-
-        // Initialiser les graphiques une fois que le DOM est chargé
+        // Initialisation des graphiques
         window.addEventListener('DOMContentLoaded', function () {
             const charts = [
                 {
                     id: 'ticketExpensesChart',
                     data: ticketChartData,
                     label: 'Dépenses Tickets',
-                    color: {
-                        backgroundColor: 'rgba(54, 162, 235, 0.8)',
-                        borderColor: 'rgba(54, 162, 235, 1)'
-                    },
-                    type: 'pie'
+                    color: { backgroundColor: modernPalette.backgrounds[0], borderColor: modernPalette.borders[0] },
+                    type: 'doughnut'
                 },
                 {
                     id: 'leadExpensesChart',
                     data: leadChartData,
                     label: 'Dépenses Leads',
-                    color: {
-                        backgroundColor: 'rgba(75, 192, 192, 0.8)',
-                        borderColor: 'rgba(75, 192, 192, 1)'
-                    },
-                    type: 'pie'
+                    color: { backgroundColor: modernPalette.backgrounds[1], borderColor: modernPalette.borders[1] },
+                    type: 'doughnut'
                 },
                 {
                     id: 'budgetChart',
                     data: budgetChartData,
                     label: 'Budget',
-                    color: {
-                        backgroundColor: 'rgba(255, 159, 64, 0.8)',
-                        borderColor: 'rgba(255, 159, 64, 1)'
-                    },
-                    type: 'doughnut'
+                    color: { backgroundColor: modernPalette.backgrounds[2], borderColor: modernPalette.borders[2] },
+                    type: 'line'
                 },
                 {
                     id: 'ratioChart',
                     data: {
                         labels: ['Tickets', 'Leads'],
                         datasets: [{
-                            data: [@Model.TotalTicketExpenses, @Model.TotalLeadExpenses],
-                            backgroundColor: [
-                                'rgba(255, 159, 64, 0.8)',
-                                'rgba(255, 99, 132, 0.8)',
-                            ],
-                            borderColor: [
-                                'rgba(255, 159, 64, 0.8)',
-                                'rgba(255, 99, 132, 0.8)',
-                            ],
-                            borderWidth: 1
+                            data: [ticketValue, leadValue],
+                            backgroundColor: [modernPalette.backgrounds[0], modernPalette.backgrounds[1]],
+                            borderColor: [modernPalette.borders[0], modernPalette.borders[1]],
+                            borderWidth: 2
                         }]
                     },
                     label: 'Répartition des dépenses',
-                    type: 'pie' // ou 'doughnut'
+                    type: 'bar'
                 }
-
             ];
 
             charts.forEach(chart => {
@@ -300,16 +325,6 @@
                     createChart(ctx, chart.data, chart.label, chart.color, chart.type);
                 }
             });
-        });
-
-        // Gestionnaire du filtre de date
-        document.getElementById('filterBtn').addEventListener('click', function () {
-            const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
-
-            if (startDate && endDate) {
-                console.log('Filtrage:', startDate, endDate);
-            }
         });
     </script>
 }

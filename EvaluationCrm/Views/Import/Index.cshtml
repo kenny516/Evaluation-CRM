@@ -1,0 +1,130 @@
+@{
+    ViewData["Title"] = "Importation";
+}
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">Importation de données</h2>
+
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @TempData["Success"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <form asp-action="UploadFile" method="post" enctype="multipart/form-data">
+                        <div class="mb-4">
+                            <div class="upload-zone p-5 text-center border rounded">
+                                <i class="bi bi-cloud-arrow-up fs-1 text-primary mb-3"></i>
+                                <h5>Déposez votre fichier JSON ici</h5>
+                                <p class="text-muted">ou</p>
+                                <input type="file" id="file" name="file" class="d-none" accept=".json">
+                                <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('file').click()">
+                                    Sélectionner un fichier
+                                </button>
+                                <div id="fileInfo" class="mt-3"></div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button type="submit" class="btn btn-primary" id="submitBtn" disabled>
+                                <i class="bi bi-cloud-upload"></i> Importer
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('file').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const fileInfo = document.getElementById('fileInfo');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (file) {
+                if (file.name.endsWith('.json')) {
+                    fileInfo.innerHTML = `
+                        <div class="alert alert-info">
+                            <i class="bi bi-file-earmark-text"></i>
+                            Fichier sélectionné: ${file.name} (${(file.size / 1024).toFixed(2)} KB)
+                        </div>`;
+                    submitBtn.disabled = false;
+                } else {
+                    fileInfo.innerHTML = `
+                        <div class="alert alert-danger">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            Le fichier doit être au format JSON
+                        </div>`;
+                    submitBtn.disabled = true;
+                }
+            } else {
+                fileInfo.innerHTML = '';
+                submitBtn.disabled = true;
+            }
+        });
+        
+        // Support du drag & drop
+        const dropZone = document.querySelector('.upload-zone');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, unhighlight, false);
+        });
+        
+        function highlight(e) {
+            dropZone.classList.add('border-primary');
+        }
+        
+        function unhighlight(e) {
+            dropZone.classList.remove('border-primary');
+        }
+        
+        dropZone.addEventListener('drop', handleDrop, false);
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const file = dt.files[0];
+            const fileInput = document.getElementById('file');
+            
+            fileInput.files = dt.files;
+            fileInput.dispatchEvent(new Event('change'));
+        }
+    </script>
+    
+    <style>
+        .upload-zone {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background-color: #f8f9fa;
+        }
+        
+        .upload-zone:hover {
+            background-color: #e9ecef;
+        }
+        
+        .upload-zone.border-primary {
+            background-color: rgba(13, 110, 253, 0.05);
+        }
+    </style>
+}
