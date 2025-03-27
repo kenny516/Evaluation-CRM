@@ -56,12 +56,15 @@ public class ExpenseController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(EditExpenseViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
         Expense expense = await _expenseService.UpdateExpense(model.Expense);
         if (model.TicketId != null)
         {
             return RedirectToAction("Index", "Ticket");
         }
-
         if (model.LeadId != null)
         {
             return RedirectToAction("Index", "Lead");
